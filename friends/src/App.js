@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import axios from 'axios';
+import PropTypes from 'prop-types';
 
 export default class App extends React.Component {
 	state = {
@@ -34,9 +35,9 @@ export default class App extends React.Component {
 					))}
 				</div>
 
-        <div>
-          <AddNewFriend />
-        </div>
+				<div>
+					<AddNewFriend />
+				</div>
 			</div>
 		);
 	}
@@ -52,13 +53,20 @@ function Friends({ friend }) {
 	);
 }
 
+Friends.propTypes = {
+	id: PropTypes.number,
+	name: PropTypes.string,
+	age: PropTypes.number,
+	email: PropTypes.string,
+};
+
 function AddNewFriend() {
 	return (
 		<form>
 			<input type="text" placeholder="name" />
 			<input type="text" placeholder="age" />
 			<input type="text" placeholder="email" />
-      <button type='submit'>Add Friend</button>
+			<button type="submit">Add Friend</button>
 		</form>
 	);
 }
