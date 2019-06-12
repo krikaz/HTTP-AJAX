@@ -1,7 +1,8 @@
 import React from 'react';
 import './App.css';
 import axios from 'axios';
-import PropTypes from 'prop-types';
+import Friends from './components/Friends';
+import AddNewFriend from './components/AddNewFriend';
 
 export default class App extends React.Component {
 	state = {
@@ -13,7 +14,6 @@ export default class App extends React.Component {
 		axios
 			.get('http://localhost:5000/friends')
 			.then(response => {
-				// debugger
 				this.setState({ friends: response.data });
 			})
 			.catch(error => {
@@ -26,7 +26,7 @@ export default class App extends React.Component {
 	}
 
 	render() {
-		console.log(this.state.friends);
+		// console.log(this.state.friends);
 		return (
 			<div>
 				<div>
@@ -43,30 +43,6 @@ export default class App extends React.Component {
 	}
 }
 
-function Friends({ friend }) {
-	return (
-		<div>
-			<p>
-				{friend.id} {friend.name} {friend.age} {friend.email}
-			</p>
-		</div>
-	);
-}
 
-Friends.propTypes = {
-	id: PropTypes.number,
-	name: PropTypes.string,
-	age: PropTypes.number,
-	email: PropTypes.string,
-};
 
-function AddNewFriend() {
-	return (
-		<form>
-			<input type="text" placeholder="name" />
-			<input type="text" placeholder="age" />
-			<input type="text" placeholder="email" />
-			<button type="submit">Add Friend</button>
-		</form>
-	);
-}
+
