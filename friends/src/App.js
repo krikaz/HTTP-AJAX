@@ -17,7 +17,10 @@ export default class App extends React.Component {
 				this.setState({ friends: response.data });
 			})
 			.catch(error => {
-				this.setState({ errorMessage: error.message });
+				this.setState({
+					errorMessage: error.message,
+        });
+        console.log(this.state.errorMessage);
 			});
 	};
 
@@ -42,7 +45,3 @@ export default class App extends React.Component {
 		);
 	}
 }
-
-
-
-
