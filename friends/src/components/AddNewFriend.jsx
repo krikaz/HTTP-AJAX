@@ -34,9 +34,9 @@ export default class AddNewFriend extends React.Component {
 				.then(response => console.log(response))
 				.catch(error => console.log(error));
 		}
-  };
-  
-  deleteFriend = () => {
+	};
+
+	deleteFriend = () => {
 		let link = 'http://localhost:5000/friends/' + this.state.id;
 		if (this.state.id) {
 			axios
@@ -44,7 +44,7 @@ export default class AddNewFriend extends React.Component {
 				.then(response => console.log(response))
 				.catch(error => console.log(error));
 		}
-  }
+	};
 
 	handleSubmit = () => {
 		this.state.id ? this.updateFriend() : this.addFriend();
