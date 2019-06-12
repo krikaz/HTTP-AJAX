@@ -5,7 +5,7 @@ export default function Friends({ friend }) {
 	return (
 		<div>
 			<p>
-				{friend.id} {friend.name} {friend.age} {friend.email}
+				ID={friend.id}; Name={friend.name}; Age={friend.age}; Email={friend.email}
 			</p>
 		</div>
 	);
