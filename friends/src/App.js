@@ -28,9 +28,15 @@ export default class App extends React.Component {
 		console.log(this.state.friends);
 		return (
 			<div>
-				{this.state.friends.map(friend => (
-					<Friends friend={friend} />
-				))}
+				<div>
+					{this.state.friends.map(friend => (
+						<Friends key={friend.id} friend={friend} />
+					))}
+				</div>
+
+        <div>
+          <AddNewFriend />
+        </div>
 			</div>
 		);
 	}
@@ -43,5 +49,16 @@ function Friends({ friend }) {
 				{friend.id} {friend.name} {friend.age} {friend.email}
 			</p>
 		</div>
+	);
+}
+
+function AddNewFriend() {
+	return (
+		<form>
+			<input type="text" placeholder="name" />
+			<input type="text" placeholder="age" />
+			<input type="text" placeholder="email" />
+      <button type='submit'>Add Friend</button>
+		</form>
 	);
 }
