@@ -15,7 +15,6 @@ export default class AddNewFriend extends React.Component {
 	state = {
 		friends: [],
 		error: null,
-		friend: null,
 	};
 
 	idToUpdate = React.createRef();
@@ -54,17 +53,21 @@ export default class AddNewFriend extends React.Component {
 
 	modifyFriend = () => {
 		this.nameToUpdate.current.value === '' 
-		? this.nameToUpdate.current.value = 'please enter a name'
+		? this.nameToUpdate.current.placeholder = 'please enter a name'
 		: this.ageToUpdate.current.value === ''
-		? this.ageToUpdate.current.value = 'please enter an age'
+		? this.ageToUpdate.current.placeholder = 'please enter an age'
 		: this.emailToUpdate.current.value === ''
-		? this.emailToUpdate.current.value = 'please enter an email'
+		? this.emailToUpdate.current.placeholder = 'please enter an email'
 		: this.idToUpdate.current.value
 			? this.updateFriend()
 			: this.addFriend()
 	};
 
 	deleteFriend = () => {
+		this.idToUpdate.current.value !== ''
+		? axios.delete(`${friendsAPI}/${this.idToUpdate.current.value}`)
+			.then(() => this.getAllFriends())
+		: this.idToUpdate.current.placeholder = 'please enter an id to delete'
 	};
 
 	render() {
