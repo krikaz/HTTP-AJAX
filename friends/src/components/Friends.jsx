@@ -53,9 +53,15 @@ export default class AddNewFriend extends React.Component {
 	};
 
 	modifyFriend = () => {
-		this.idToUpdate.current.value
-		? this.updateFriend()
-		: this.addFriend()
+		this.nameToUpdate.current.value === '' 
+		? this.nameToUpdate.current.value = 'please enter a name'
+		: this.ageToUpdate.current.value === ''
+		? this.ageToUpdate.current.value = 'please enter an age'
+		: this.emailToUpdate.current.value === ''
+		? this.emailToUpdate.current.value = 'please enter an email'
+		: this.idToUpdate.current.value
+			? this.updateFriend()
+			: this.addFriend()
 	};
 
 	deleteFriend = () => {
@@ -72,11 +78,13 @@ export default class AddNewFriend extends React.Component {
 				</Form>
 
 				<Form>
-						<input type='text' placeholder='id to update' ref={this.idToUpdate} />
+						<input type='text' placeholder='id to update or delete' ref={this.idToUpdate} />
 						<input type='text' placeholder='name' ref={this.nameToUpdate} />
-						<input type='number' placeholder='age' ref={this.ageToUpdate} />
+						<input type='text' placeholder='age' ref={this.ageToUpdate} />
 						<input type='text' placeholder='email' ref={this.emailToUpdate} />
-						<button onClick={this.modifyFriend}>submit changes</button>
+						<br />
+						<button onClick={this.modifyFriend}>add friend</button>
+						<button onClick={this.deleteFriend}>delete friend</button>
 				</Form>
 
 			</div>
