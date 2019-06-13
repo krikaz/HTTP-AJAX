@@ -11,6 +11,10 @@ const Form = styled.div`
 	padding: 1rem;
 `;
 
+// const RedSquare = styled`
+// 	color: red;
+// `;
+
 export default class AddNewFriend extends React.Component {
 	state = {
 		friends: [],
@@ -27,8 +31,7 @@ export default class AddNewFriend extends React.Component {
 	}
 
 	getAllFriends = () => {
-		axios.get(friendsAPI)
-			.then(res => this.setState({ friends: res.data }));
+		axios.get(friendsAPI).then(res => this.setState({ friends: res.data }));
 	};
 
 	addFriend = () => {
@@ -36,9 +39,8 @@ export default class AddNewFriend extends React.Component {
 			name: this.nameToUpdate.current.value,
 			age: this.ageToUpdate.current.value,
 			email: this.emailToUpdate.current.value,
-		}
-		axios.post(friendsAPI, newFriend)
-			.then(() => this.getAllFriends());
+		};
+		axios.post(friendsAPI, newFriend).then(() => this.getAllFriends());
 	};
 
 	updateFriend = () => {
@@ -46,28 +48,51 @@ export default class AddNewFriend extends React.Component {
 			name: this.nameToUpdate.current.value,
 			age: this.ageToUpdate.current.value,
 			email: this.emailToUpdate.current.value,
-		}
-		axios.put(`${friendsAPI}/${this.idToUpdate.current.value}`, newFriend)
+		};
+		axios
+			.put(`${friendsAPI}/${this.idToUpdate.current.value}`, newFriend)
 			.then(() => this.getAllFriends());
 	};
 
 	modifyFriend = () => {
-		this.nameToUpdate.current.value === '' 
-		? this.nameToUpdate.current.placeholder = 'please enter a name'
-		: this.ageToUpdate.current.value === ''
-		? this.ageToUpdate.current.placeholder = 'please enter an age'
-		: this.emailToUpdate.current.value === ''
-		? this.emailToUpdate.current.placeholder = 'please enter an email'
-		: this.idToUpdate.current.value
-			? this.updateFriend()
-			: this.addFriend()
+		if (this.nameToUpdate.current.value === '') {
+			this.nameToUpdate.current.placeholder = 'please enter a name';
+			this.nameToUpdate.current.focus();
+		} else if (this.ageToUpdate.current.value === '') {
+			this.ageToUpdate.current.placeholder = 'please enter an age';
+			this.ageToUpdate.current.focus();
+		} else if (this.emailToUpdate.current.value === '') {
+			this.emailToUpdate.current.placeholder = 'please enter an email';
+			this.emailToUpdate.current.focus();
+		} else {
+			if (this.idToUpdate.current.value) {
+				this.updateFriend();
+				this.resetFields();
+			} else {
+				this.addFriend();
+				this.resetFields();
+			}
+		}
 	};
 
 	deleteFriend = () => {
-		this.idToUpdate.current.value !== ''
-		? axios.delete(`${friendsAPI}/${this.idToUpdate.current.value}`)
-			.then(() => this.getAllFriends())
-		: this.idToUpdate.current.placeholder = 'please enter an id to delete'
+		if (this.idToUpdate.current.value !== '') {
+			axios
+				.delete(`${friendsAPI}/${this.idToUpdate.current.value}`)
+				.then(() => this.getAllFriends());
+			this.resetFields();
+		} else {
+			this.resetFields();
+			this.idToUpdate.current.placeholder = 'please enter an id to delete';
+			this.idToUpdate.current.focus();
+		}
+	};
+
+	resetFields = () => {
+		this.idToUpdate.current.value = '';
+		this.nameToUpdate.current.value = '';
+		this.ageToUpdate.current.value = '';
+		this.emailToUpdate.current.value = '';
 	};
 
 	render() {
@@ -81,15 +106,18 @@ export default class AddNewFriend extends React.Component {
 				</Form>
 
 				<Form>
-						<input type='text' placeholder='id to update or delete' ref={this.idToUpdate} />
-						<input type='text' placeholder='name' ref={this.nameToUpdate} />
-						<input type='text' placeholder='age' ref={this.ageToUpdate} />
-						<input type='text' placeholder='email' ref={this.emailToUpdate} />
-						<br />
-						<button onClick={this.modifyFriend}>add friend</button>
-						<button onClick={this.deleteFriend}>delete friend</button>
+					<input
+						type="text"
+						placeholder="id to update or delete"
+						ref={this.idToUpdate}
+					/>
+					<input type="text" placeholder="name" ref={this.nameToUpdate} />
+					<input type="text" placeholder="age" ref={this.ageToUpdate} />
+					<input type="text" placeholder="email" ref={this.emailToUpdate} />
+					<br />
+					<button onClick={this.modifyFriend}>add friend</button>
+					<button onClick={this.deleteFriend}>delete friend</button>
 				</Form>
-
 			</div>
 		);
 	}
