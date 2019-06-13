@@ -11,10 +11,6 @@ const Form = styled.div`
 	padding: 1rem;
 `;
 
-// const RedSquare = styled`
-// 	color: red;
-// `;
-
 export default class AddNewFriend extends React.Component {
 	state = {
 		friends: [],
@@ -88,6 +84,16 @@ export default class AddNewFriend extends React.Component {
 		}
 	};
 
+	checkFriend = () => {
+		if (this.idToUpdate.current.value !== '') {
+			const findID = fr => fr.id === parseInt(this.idToUpdate.current.value);
+			const friendChecked = this.state.friends.find(findID);
+			this.nameToUpdate.current.value = friendChecked.name;
+			this.ageToUpdate.current.value = friendChecked.age;
+			this.emailToUpdate.current.value = friendChecked.email;
+		}
+	};
+
 	resetFields = () => {
 		this.idToUpdate.current.value = '';
 		this.nameToUpdate.current.value = '';
@@ -108,14 +114,15 @@ export default class AddNewFriend extends React.Component {
 				<Form>
 					<input
 						type="text"
-						placeholder="id to update or delete"
+						placeholder="id to update, check or delete"
 						ref={this.idToUpdate}
 					/>
 					<input type="text" placeholder="name" ref={this.nameToUpdate} />
 					<input type="text" placeholder="age" ref={this.ageToUpdate} />
 					<input type="text" placeholder="email" ref={this.emailToUpdate} />
 					<br />
-					<button onClick={this.modifyFriend}>add friend</button>
+					<button onClick={this.modifyFriend}>add/update friend</button>
+					<button onClick={this.checkFriend}>check friend</button>
 					<button onClick={this.deleteFriend}>delete friend</button>
 				</Form>
 			</div>
