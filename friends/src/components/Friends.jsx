@@ -1,19 +1,45 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
+import axios from 'axios';
+import Friend from './Friend';
 
-export default function Friends({ friend }) {
-	return (
-		<div>
-			<p>
-				ID={friend.id}; Name={friend.name}; Age={friend.age}; Email={friend.email}
-			</p>
-		</div>
-	);
+const friendsAPI = 'http://localhost:5000/friends';
+
+export default class AddNewFriend extends React.Component {
+	state = {
+		friends: [],
+		error: null,
+		friend: null,
+	};
+
+	componentDidMount() {
+		// this.getAllFriends();
+	}
+
+	getAllFriends = () => {
+		axios.get(friendsAPI)
+			.then(res => this.setState({ friends: res.data }));
+	};
+
+	addFriend = () => {
+	};
+
+	updateFriend = () => {
+	};
+
+	deleteFriend = () => {
+	};
+
+	render() {
+		return (
+			<div>
+				<div>
+					{this.state.friends.map(fr => (
+						<Friend key={fr.id} friend={fr} />
+					))}
+					<button onClick={this.getAllFriends}>getAllFriends</button>
+				</div>
+
+			</div>
+		);
+	}
 }
-
-// Friends.propTypes = {
-// 	id: PropTypes.number,
-// 	name: PropTypes.string,
-// 	age: PropTypes.number,
-// 	email: PropTypes.string,
-// };
